@@ -6,10 +6,12 @@ public class InputManager : MonoBehaviour {
     public static InputManager Instance { get; private set; }
 
     private UserInputActionAsset playerInputAction;
-
-    public event Action<Vector2> OnMove;
-    public event Action<Vector2> OnLook;
-    public event Action OnJump;
+    
+    public Vector2 MoveInput { get; private set; }
+    public Vector2 LookInput { get; private set; }
+    public bool JumpPressed { get; private set; }
+    public bool FirePressed { get; private set; }
+    public bool ReloadPressed { get; private set; }
 
     private void Awake() {
         if (Instance == null) {
@@ -27,16 +29,21 @@ public class InputManager : MonoBehaviour {
     private void OnEnable() {
         playerInputAction.Player.Enable();
 
-        playerInputAction.Player.Move.performed += context => OnMove?.Invoke(context.ReadValue<Vector2>());
-        playerInputAction.Player.Move.canceled += context => OnMove?.Invoke(Vector2.zero);
+        playerInputAction.Player.Move.performed += context => MoveInput = context.ReadValue<Vector2>();
+        playerInputAction.Player.Move.canceled += context => MoveInput = Vector2.zero;
+        
+        playerInputAction.Player.Look.performed += context => LookInput = context.ReadValue<Vector2>();
+        playerInputAction.Player.Look.canceled += context => LookInput = Vector2.zero;
 
-        playerInputAction.Player.Look.performed += context => OnLook?.Invoke(context.ReadValue<Vector2>());
-        playerInputAction.Player.Look.canceled += context => OnLook?.Invoke(Vector2.zero);
-
-        playerInputAction.Player.Jump.performed += context => OnJump?.Invoke();
+        playerInputAction.Player.Jump.performed += context => JumpPressed = true;
+        playerInputAction.Player.Jump.canceled += context => JumpPressed = false;
     }
 
     private void OnDisable() {
         playerInputAction.Player.Disable();
+    }
+
+    private void Update() {
+        
     }
 }

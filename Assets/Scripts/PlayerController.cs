@@ -10,65 +10,55 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float jumpForce = 2f;
     [SerializeField] private float gravity = 9.81f;
 
-    private float pitch = 0f;
-    private Vector3 moveInput;
+    private float pitch = 0f; // For vertical camera rotation
     private Vector3 velocity;
     
     private void Start() {
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
-
-        // Subscribe to InputManager events
-        InputManager.Instance.OnMove += HandleMoveInput;
-        InputManager.Instance.OnLook += HandleLookInput;
-        InputManager.Instance.OnJump += HandleJumpInput;
-    }
-
-    private void OnDestroy() {
-        // Unsubscribe to prevent memory leaks
-        InputManager.Instance.OnMove -= HandleMoveInput;
-        InputManager.Instance.OnLook -= HandleLookInput;
-        InputManager.Instance.OnJump -= HandleJumpInput;
     }
 
     private void Update() {
-        ApplyMovement();
-        ApplyGravity();
+        HandleMovement();
+        HandleLook();
+        HandleJump();
     }
 
-    private void HandleMoveInput(Vector2 input) {
-        moveInput = new Vector3(input.x, 0f, input.y);
-        moveInput = transform.TransformDirection(moveInput); // Convert to world space
+    private void HandleMovement() {
+        Vector3 moveInput = new Vector3(InputManager.Instance.MoveInput.x, 0f, InputManager.Instance.MoveInput.y);
+        moveInput = transform.TransformDirection(moveInput); // Convert from local to world space
         moveInput.Normalize();
+
+        velocity.x = moveInput.x * moveSpeed;
+        velocity.z = moveInput.z * moveSpeed;
+        
+        characterController.Move(velocity * Time.deltaTime);
     }
 
-    private void HandleLookInput(Vector2 input) {
-        // Rotate the player horizontally (Yaw)
-        transform.Rotate(Vector3.up * input.x * lookSensitivity);
+    private void HandleLook() {
+        Vector2 lookInput = InputManager.Instance.LookInput * lookSensitivity;
 
+        // Rotate the player horizontally (Yaw)
+        transform.Rotate(Vector3.up * lookInput.x);
+        
         // Vertical camera rotation (Pitch)
-        pitch -= input.y * lookSensitivity;
-        pitch = Mathf.Clamp(pitch, -90f, 90f);
+        pitch -= lookInput.y;
+        pitch = Mathf.Clamp(pitch, -90f, 90f); // Clamp to prevent flipping
         cameraTransform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
     }
 
-    private void HandleJumpInput() {
-        if (characterController.isGrounded) {
-            velocity.y = Mathf.Sqrt(jumpForce * 2f * gravity);
-        }
-        Debug.Log("Jump function called");
-    }
-
-    private void ApplyMovement() {
-        Vector3 move = moveInput * moveSpeed;
-        characterController.Move(move * Time.deltaTime);
-    }
-
-    private void ApplyGravity() {
-        if (characterController.isGrounded && velocity.y < 0) {
-            velocity.y = -2f;
+    private void HandleJump() {
+        bool isGrounded = characterController.isGrounded;
+        
+        if (isGrounded && velocity.y < 0) {
+            velocity.y = -2f; // Small downward force to keep player grounded
         }
 
+        if (isGrounded && InputManager.Instance.JumpPressed) {
+            velocity.y = Mathf.Sqrt(jumpForce * 2f * gravity); // Jump velocity calculation
+        }
+
+        // Apply gravity
         velocity.y -= gravity * Time.deltaTime;
         characterController.Move(new Vector3(0, velocity.y, 0) * Time.deltaTime);
     }
