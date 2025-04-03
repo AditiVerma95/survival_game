@@ -138,7 +138,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _HeightGradient: 0.087
+    - _HeightGradient: 0.623
     - _HeightStartGradient: 0.07
     - _IndirectLightMultiplier: 1
     - _IsFace: 0
@@ -196,6 +196,7 @@ Material:
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _Tint: {r: 0.9433962, g: 0.9433962, b: 0.9433962, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &581381841201640716
 MonoBehaviour:
   m_ObjectHideFlags: 11
