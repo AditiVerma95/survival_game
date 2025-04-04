@@ -10,8 +10,8 @@ public class InputManager : MonoBehaviour {
     public Vector2 MoveInput { get; private set; }
     public Vector2 LookInput { get; private set; }
     public bool JumpPressed { get; private set; }
-    public bool FirePressed { get; private set; }
-    public bool ReloadPressed { get; private set; }
+    public bool SprintPressed { get; private set; }
+    
 
     private void Awake() {
         if (Instance == null) {
@@ -37,6 +37,10 @@ public class InputManager : MonoBehaviour {
 
         playerInputAction.Player.Jump.performed += context => JumpPressed = true;
         playerInputAction.Player.Jump.canceled += context => JumpPressed = false;
+
+        playerInputAction.Player.Sprint.performed += context => SprintPressed = true;
+        playerInputAction.Player.Sprint.canceled += context => SprintPressed = false;
+        
     }
 
     private void OnDisable() {

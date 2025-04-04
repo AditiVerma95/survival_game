@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private float jumpForce = 2f;
     [SerializeField] private float gravity = 9.81f;
+    [SerializeField] private float sprintMultiplier = 2f;
+    private float sprintVal = 1f;
 
     private float pitch = 0f; // For vertical camera rotation
     private Vector3 velocity;
@@ -19,6 +21,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Update() {
+        HandleSprint();
         HandleMovement();
         HandleLook();
         HandleJump();
@@ -29,8 +32,8 @@ public class PlayerController : MonoBehaviour {
         moveInput = transform.TransformDirection(moveInput); // Convert from local to world space
         moveInput.Normalize();
 
-        velocity.x = moveInput.x * moveSpeed;
-        velocity.z = moveInput.z * moveSpeed;
+        velocity.x = moveInput.x * moveSpeed * sprintVal;
+        velocity.z = moveInput.z * moveSpeed * sprintVal;
         
         characterController.Move(velocity * Time.deltaTime);
     }
@@ -61,5 +64,9 @@ public class PlayerController : MonoBehaviour {
         // Apply gravity
         velocity.y -= gravity * Time.deltaTime;
         characterController.Move(new Vector3(0, velocity.y, 0) * Time.deltaTime);
+    }
+
+    private void HandleSprint() {
+        sprintVal = (InputManager.Instance.SprintPressed) ? sprintMultiplier : 1f;
     }
 }
