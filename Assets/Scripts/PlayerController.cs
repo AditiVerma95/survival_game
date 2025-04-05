@@ -60,19 +60,31 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleJump() {
         bool isGrounded = characterController.isGrounded;
-        
+    
         if (isGrounded && velocity.y < 0) {
-            velocity.y = -2f; // Small downward force to keep player grounded
+            velocity.y = -2f; // Keeps grounded
         }
 
-        if (isGrounded && InputManager.Instance.JumpPressed) {
-            velocity.y = Mathf.Sqrt(jumpForce * 2f * gravity); // Jump velocity calculation
+        // Only jump if on walkable slope
+        if (isGrounded && InputManager.Instance.JumpPressed && IsOnWalkableSlope()) {
+            velocity.y = Mathf.Sqrt(jumpForce * 2f * gravity);
         }
 
         // Apply gravity
         velocity.y -= gravity * Time.deltaTime;
         characterController.Move(new Vector3(0, velocity.y, 0) * Time.deltaTime);
     }
+    
+    private bool IsOnWalkableSlope() {
+        Ray ray = new Ray(transform.position, Vector3.down);
+        if (Physics.Raycast(ray, out RaycastHit hit, 1.5f)) {
+            float slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
+            return slopeAngle <= characterController.slopeLimit; // default is 45°
+        }
+        return false;
+    }
+
+
 
     private void HandleSprint() {
         sprintVal = (InputManager.Instance.SprintPressed) ? sprintMultiplier : 1f;
