@@ -14,8 +14,15 @@ public class PlayerController : MonoBehaviour {
 
     private float pitch = 0f; // For vertical camera rotation
     private Vector3 velocity;
+
+    private AudioSource audioSource;
+    private AudioClip currentAudio;
+    [SerializeField] private AudioClip walkingAudioClip;
+    [SerializeField] private AudioClip runningAudioClip;
+    private bool isAudioPlaying = false;
     
     private void Start() {
+        audioSource = GetComponent<AudioSource>();
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -23,6 +30,7 @@ public class PlayerController : MonoBehaviour {
     private void Update() {
         HandleSprint();
         HandleMovement();
+        HandleAudio();
         HandleLook();
         HandleJump();
     }
@@ -68,5 +76,24 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleSprint() {
         sprintVal = (InputManager.Instance.SprintPressed) ? sprintMultiplier : 1f;
+        currentAudio = (InputManager.Instance.SprintPressed) ? runningAudioClip : walkingAudioClip;
     }
+
+    private void HandleAudio() {
+        bool isMoving = new Vector3(velocity.x, 0, velocity.z).magnitude > 0.1f;
+        bool isGrounded = characterController.isGrounded;
+
+        if (isMoving && isGrounded) {
+            if (!audioSource.isPlaying || audioSource.clip != currentAudio) {
+                audioSource.clip = currentAudio;
+                audioSource.loop = true;
+                audioSource.Play();
+            }
+        } else {
+            if (audioSource.isPlaying) {
+                audioSource.Stop();
+            }
+        }
+    }
+
 }
