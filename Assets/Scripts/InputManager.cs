@@ -11,8 +11,9 @@ public class InputManager : MonoBehaviour {
     public Vector2 LookInput { get; private set; }
     public bool JumpPressed { get; private set; }
     public bool SprintPressed { get; private set; }
+    public bool InteractPressed { get; private set; }
+    public bool Interact2Pressed { get; private set; }
     
-    public bool MenuPressed { get; private set; }
     public event EventHandler menuEvent;
 
     private void Awake() {
@@ -38,6 +39,10 @@ public class InputManager : MonoBehaviour {
         playerInputAction.Player.Jump.canceled += context => JumpPressed = false;
         playerInputAction.Player.Sprint.performed += context => SprintPressed = true;
         playerInputAction.Player.Sprint.canceled += context => SprintPressed = false;
+        playerInputAction.Player.Interact.performed += context => InteractPressed = true;
+        playerInputAction.Player.Interact.canceled += context => InteractPressed = false;
+        playerInputAction.Player.Interact2.performed += context => Interact2Pressed = true;
+        playerInputAction.Player.Interact2.canceled += context => Interact2Pressed = false;
         
         playerInputAction.UI.Enable();
         playerInputAction.UI.Menu.performed += context => menuEvent?.Invoke(this, EventArgs.Empty);

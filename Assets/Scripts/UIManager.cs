@@ -22,7 +22,6 @@ public class UIManager : MonoBehaviour {
         menuUI.SetActive(true);
         InputManager.Instance.playerInputAction.Player.Disable();
         isMenuEnabled = true;
-        // Enable cursor (show and unlock)
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -31,7 +30,6 @@ public class UIManager : MonoBehaviour {
         menuUI.SetActive(false);
         InputManager.Instance.playerInputAction.Player.Enable();
         isMenuEnabled = false;
-        // Enable cursor (show and unlock)
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
