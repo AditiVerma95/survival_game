@@ -51,6 +51,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Shoot",
+                    "type": "Button",
+                    "id": "c3fe42eb-2a76-4f1c-b417-8cdbb6b94ea5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Interact2",
                     "type": "Button",
                     "id": "1b7acfbe-4a24-4b6c-85ec-8e54b1c020ca",
@@ -61,6 +70,17 @@
                 }
             ],
             "bindings": [
+                {
+                    "name": "",
+                    "id": "e48089b9-9b5c-4452-98bd-362af0104776",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
                 {
                     "name": "2D Vector",
                     "id": "bf343187-2548-4fea-8410-11df65d03929",
@@ -129,6 +149,17 @@
                 },
                 {
                     "name": "",
+                    "id": "d6e5be33-8ebf-4cce-9f70-c7aaf726ea0b",
+                    "path": "<Touchscreen>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "68a1f619-395d-42b9-81b1-b01c923afaef",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -157,6 +188,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ad4af777-3f0c-495c-a429-7523c8ad5cad",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

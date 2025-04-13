@@ -73,6 +73,15 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""c3fe42eb-2a76-4f1c-b417-8cdbb6b94ea5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Interact2"",
                     ""type"": ""Button"",
                     ""id"": ""1b7acfbe-4a24-4b6c-85ec-8e54b1c020ca"",
@@ -83,6 +92,17 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
                 }
             ],
             ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e48089b9-9b5c-4452-98bd-362af0104776"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
                 {
                     ""name"": ""2D Vector"",
                     ""id"": ""bf343187-2548-4fea-8410-11df65d03929"",
@@ -151,6 +171,17 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""d6e5be33-8ebf-4cce-9f70-c7aaf726ea0b"",
+                    ""path"": ""<Touchscreen>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""68a1f619-395d-42b9-81b1-b01c923afaef"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -179,6 +210,17 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ad4af777-3f0c-495c-a429-7523c8ad5cad"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -233,6 +275,7 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Interact2 = m_Player.FindAction("Interact2", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -309,6 +352,7 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_Interact2;
     public struct PlayerActions
     {
@@ -319,6 +363,7 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @Interact2 => m_Wrapper.m_Player_Interact2;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -344,6 +389,9 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
             @Interact2.started += instance.OnInteract2;
             @Interact2.performed += instance.OnInteract2;
             @Interact2.canceled += instance.OnInteract2;
@@ -366,6 +414,9 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
             @Interact2.started -= instance.OnInteract2;
             @Interact2.performed -= instance.OnInteract2;
             @Interact2.canceled -= instance.OnInteract2;
@@ -439,6 +490,7 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
         void OnInteract2(InputAction.CallbackContext context);
     }
     public interface IUIActions
