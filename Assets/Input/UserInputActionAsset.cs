@@ -107,6 +107,15 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pick"",
+                    ""type"": ""Button"",
+                    ""id"": ""ab3766aa-3ea5-4c49-bf08-57d8182d2124"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -274,6 +283,17 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
                     ""action"": ""Axe"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""121ca0a2-bac5-4d64-92b9-1d7cfa00aab4"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -339,6 +359,7 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
         m_Player_Interact2 = m_Player.FindAction("Interact2", throwIfNotFound: true);
         m_Player_Axe = m_Player.FindAction("Axe", throwIfNotFound: true);
         m_Player_Bow = m_Player.FindAction("Bow", throwIfNotFound: true);
+        m_Player_Pick = m_Player.FindAction("Pick", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Menu = m_UI.FindAction("Menu", throwIfNotFound: true);
@@ -419,6 +440,7 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact2;
     private readonly InputAction m_Player_Axe;
     private readonly InputAction m_Player_Bow;
+    private readonly InputAction m_Player_Pick;
     public struct PlayerActions
     {
         private @UserInputActionAsset m_Wrapper;
@@ -432,6 +454,7 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
         public InputAction @Interact2 => m_Wrapper.m_Player_Interact2;
         public InputAction @Axe => m_Wrapper.m_Player_Axe;
         public InputAction @Bow => m_Wrapper.m_Player_Bow;
+        public InputAction @Pick => m_Wrapper.m_Player_Pick;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -468,6 +491,9 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
             @Bow.started += instance.OnBow;
             @Bow.performed += instance.OnBow;
             @Bow.canceled += instance.OnBow;
+            @Pick.started += instance.OnPick;
+            @Pick.performed += instance.OnPick;
+            @Pick.canceled += instance.OnPick;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -499,6 +525,9 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
             @Bow.started -= instance.OnBow;
             @Bow.performed -= instance.OnBow;
             @Bow.canceled -= instance.OnBow;
+            @Pick.started -= instance.OnPick;
+            @Pick.performed -= instance.OnPick;
+            @Pick.canceled -= instance.OnPick;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -581,6 +610,7 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
         void OnInteract2(InputAction.CallbackContext context);
         void OnAxe(InputAction.CallbackContext context);
         void OnBow(InputAction.CallbackContext context);
+        void OnPick(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

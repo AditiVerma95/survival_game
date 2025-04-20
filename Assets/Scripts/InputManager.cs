@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour {
     public bool ShootPressed { get; private set; }
     public event EventHandler axeEvent;
     public event EventHandler bowEvent;
+    public event EventHandler pickEvent;
     
     public event EventHandler menuEvent;
     public event EventHandler inventoryEvent;
@@ -51,6 +52,7 @@ public class InputManager : MonoBehaviour {
         playerInputAction.Player.Shoot.canceled += context => ShootPressed = false;
         playerInputAction.Player.Axe.performed += context => axeEvent?.Invoke(this, EventArgs.Empty);
         playerInputAction.Player.Bow.performed += context => bowEvent?.Invoke(this, EventArgs.Empty);
+        playerInputAction.Player.Pick.performed += context => pickEvent?.Invoke(this, EventArgs.Empty); 
         
         playerInputAction.UI.Enable();
         playerInputAction.UI.Menu.performed += context => menuEvent?.Invoke(this, EventArgs.Empty);
