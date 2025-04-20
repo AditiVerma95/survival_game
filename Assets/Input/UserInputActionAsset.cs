@@ -89,6 +89,24 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Axe"",
+                    ""type"": ""Button"",
+                    ""id"": ""3aaeb34e-d207-4496-8dfb-d295ba4e8c55"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Bow"",
+                    ""type"": ""Button"",
+                    ""id"": ""dcbeecc1-89e1-4a23-a880-06d694500587"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -234,6 +252,28 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
                     ""action"": ""Interact2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b60bce06-baac-4985-aa92-bd5c674283de"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Bow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dbccab51-8793-4ca8-ae0e-ac39f0b7c8f6"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Axe"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -245,6 +285,15 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
                     ""name"": ""Menu"",
                     ""type"": ""Button"",
                     ""id"": ""e2efc4f9-10d3-4f9d-bea7-47bf12b8c817"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""3c03b83f-3f6d-4bcc-8c75-534cdf398149"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -262,6 +311,17 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
                     ""action"": ""Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c968132-5de7-47a2-b60b-0a68db6c5d8e"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -277,9 +337,12 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Interact2 = m_Player.FindAction("Interact2", throwIfNotFound: true);
+        m_Player_Axe = m_Player.FindAction("Axe", throwIfNotFound: true);
+        m_Player_Bow = m_Player.FindAction("Bow", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Menu = m_UI.FindAction("Menu", throwIfNotFound: true);
+        m_UI_Inventory = m_UI.FindAction("Inventory", throwIfNotFound: true);
     }
 
     ~@UserInputActionAsset()
@@ -354,6 +417,8 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_Interact2;
+    private readonly InputAction m_Player_Axe;
+    private readonly InputAction m_Player_Bow;
     public struct PlayerActions
     {
         private @UserInputActionAsset m_Wrapper;
@@ -365,6 +430,8 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @Interact2 => m_Wrapper.m_Player_Interact2;
+        public InputAction @Axe => m_Wrapper.m_Player_Axe;
+        public InputAction @Bow => m_Wrapper.m_Player_Bow;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -395,6 +462,12 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
             @Interact2.started += instance.OnInteract2;
             @Interact2.performed += instance.OnInteract2;
             @Interact2.canceled += instance.OnInteract2;
+            @Axe.started += instance.OnAxe;
+            @Axe.performed += instance.OnAxe;
+            @Axe.canceled += instance.OnAxe;
+            @Bow.started += instance.OnBow;
+            @Bow.performed += instance.OnBow;
+            @Bow.canceled += instance.OnBow;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -420,6 +493,12 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
             @Interact2.started -= instance.OnInteract2;
             @Interact2.performed -= instance.OnInteract2;
             @Interact2.canceled -= instance.OnInteract2;
+            @Axe.started -= instance.OnAxe;
+            @Axe.performed -= instance.OnAxe;
+            @Axe.canceled -= instance.OnAxe;
+            @Bow.started -= instance.OnBow;
+            @Bow.performed -= instance.OnBow;
+            @Bow.canceled -= instance.OnBow;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -442,11 +521,13 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_Menu;
+    private readonly InputAction m_UI_Inventory;
     public struct UIActions
     {
         private @UserInputActionAsset m_Wrapper;
         public UIActions(@UserInputActionAsset wrapper) { m_Wrapper = wrapper; }
         public InputAction @Menu => m_Wrapper.m_UI_Menu;
+        public InputAction @Inventory => m_Wrapper.m_UI_Inventory;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -459,6 +540,9 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
             @Menu.started += instance.OnMenu;
             @Menu.performed += instance.OnMenu;
             @Menu.canceled += instance.OnMenu;
+            @Inventory.started += instance.OnInventory;
+            @Inventory.performed += instance.OnInventory;
+            @Inventory.canceled += instance.OnInventory;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -466,6 +550,9 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
             @Menu.started -= instance.OnMenu;
             @Menu.performed -= instance.OnMenu;
             @Menu.canceled -= instance.OnMenu;
+            @Inventory.started -= instance.OnInventory;
+            @Inventory.performed -= instance.OnInventory;
+            @Inventory.canceled -= instance.OnInventory;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -492,9 +579,12 @@ public partial class @UserInputActionAsset: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnInteract2(InputAction.CallbackContext context);
+        void OnAxe(InputAction.CallbackContext context);
+        void OnBow(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
         void OnMenu(InputAction.CallbackContext context);
+        void OnInventory(InputAction.CallbackContext context);
     }
 }

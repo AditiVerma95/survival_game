@@ -6,7 +6,7 @@ public class BowMechanics : MonoBehaviour {
     [SerializeField] private Transform arrowSpawnPoint;
     [SerializeField] private GameObject arrowPrefab;
     private Animator animator;
-    private bool isShooting = false;
+    public bool isAnimating = false;
     private float shootAnimationLength = 0.567f;
     private float reloadAnimationLength = 1.5f;
 
@@ -15,13 +15,14 @@ public class BowMechanics : MonoBehaviour {
     }
 
     private void Update() {
-        if (!isShooting && InputManager.Instance.ShootPressed) {
+        if (!isAnimating && InputManager.Instance.ShootPressed) {
             StartCoroutine(BowShoot());
         }
     }
 
     private IEnumerator BowShoot() {
-        isShooting = true;
+        PlayerEquipState.Instance.canSwitch = false;
+        isAnimating = true;
         animator.SetBool("isDrawing", true);
         
         yield return new WaitForSeconds(shootAnimationLength);
@@ -34,6 +35,7 @@ public class BowMechanics : MonoBehaviour {
 
         yield return new WaitForSeconds(reloadAnimationLength);
         animator.SetBool("isDrawing", false);
-        isShooting = false;
+        isAnimating = false;
+        PlayerEquipState.Instance.canSwitch = true;
     }
 }
