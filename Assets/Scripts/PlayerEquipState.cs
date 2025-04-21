@@ -14,8 +14,10 @@ public class PlayerEquipState : MonoBehaviour {
     }
 
     private void Start() {
+        axe.SetActive(false);
+        bow.SetActive(false);
         currentEquipped = axe;
-        
+        currentEquipped.SetActive(true);
     }
 
     private void OnEnable() {

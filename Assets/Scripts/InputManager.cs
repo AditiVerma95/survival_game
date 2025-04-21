@@ -22,15 +22,7 @@ public class InputManager : MonoBehaviour {
     public event EventHandler inventoryEvent;
 
     private void Awake() {
-        if (Instance == null) {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else {
-            Destroy(gameObject);
-            return;
-        }
-
+        Instance = this;
         playerInputAction = new UserInputActionAsset();
     }
 

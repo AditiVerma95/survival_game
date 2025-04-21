@@ -11,6 +11,9 @@ public class InventoryManager : MonoBehaviour {
 
     public int apple = 0;
     [SerializeField] private TextMeshProUGUI appleText;
+    
+    public int lighter = 0;
+    [SerializeField] private TextMeshProUGUI lighterText;
 
     public static InventoryManager Instance;
 
@@ -31,6 +34,11 @@ public class InventoryManager : MonoBehaviour {
     public void UpdateApple(int value) {
         apple += value;
         appleText.text = apple + "";
+    }
+
+    public void UpdateLighter(int value) {
+        lighter += value;
+        lighterText.text = lighter + "";
     }
 
     public void AppleConsume() {

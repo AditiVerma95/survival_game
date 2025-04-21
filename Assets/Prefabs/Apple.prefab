@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9111976738342996130}
   - component: {fileID: 8487310642912703324}
   - component: {fileID: 8387906009797318747}
+  - component: {fileID: 4826719191312247940}
   m_Layer: 7
   m_Name: Apple
   m_TagString: Apple
@@ -121,3 +122,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4fcbb1f7df5f584b872ab74b0d389a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &4826719191312247940
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443183548077328049}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

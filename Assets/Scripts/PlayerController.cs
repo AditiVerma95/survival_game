@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour {
     private void HandleAudio() {
         bool isMoving = new Vector3(velocity.x, 0, velocity.z).magnitude > 0.1f;
         bool isGrounded = characterController.isGrounded;
-        if (isMoving && isGrounded) {
+        if (isMoving) {
             if (!audioSource.isPlaying || audioSource.clip != currentAudio) {
                 audioSource.clip = currentAudio;
                 audioSource.loop = true;

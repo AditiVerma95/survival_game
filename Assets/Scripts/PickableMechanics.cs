@@ -18,6 +18,10 @@ public class PickableMechanics : MonoBehaviour {
             if (raycastHit.collider.tag == "Apple") {
                 raycastHit.collider.GetComponent<Apple>().PickApple();
             }
+
+            else if (raycastHit.collider.tag == "Lighter") {
+                raycastHit.collider.GetComponent<Lighter>().PickLighter();
+            }
         }
     }
 }
