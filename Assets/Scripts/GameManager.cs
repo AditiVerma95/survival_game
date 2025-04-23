@@ -15,12 +15,12 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private Slider foodSlider;
 
     [Header("Water")]
-    [SerializeField] private float water = 0.5f;
+    [SerializeField] public float water = 0.5f;
     [SerializeField] private float waterDepleteFactor;
     [SerializeField] private Slider waterSlider;
 
     [Header("Bottle")] 
-    [SerializeField] private float bottle = 0f;
+    [SerializeField] public float bottle = 0f;
     [SerializeField] private Slider bottleSlider;
 
     public static GameManager Instance;

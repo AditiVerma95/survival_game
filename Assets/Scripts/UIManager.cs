@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour {
     [SerializeField] private GameObject menuUI;
@@ -64,6 +65,6 @@ public class UIManager : MonoBehaviour {
     }
 
     public void Exit() {
-        Application.Quit();
+        SceneManager.LoadScene(0);
     }
 }

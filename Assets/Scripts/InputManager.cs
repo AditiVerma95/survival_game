@@ -12,11 +12,11 @@ public class InputManager : MonoBehaviour {
     public bool JumpPressed { get; private set; }
     public bool SprintPressed { get; private set; }
     public bool InteractPressed { get; private set; }
-    public bool Interact2Pressed { get; private set; }
     public bool ShootPressed { get; private set; }
     public event EventHandler axeEvent;
     public event EventHandler bowEvent;
     public event EventHandler pickEvent;
+    public event EventHandler bottleEvent;
     
     public event EventHandler menuEvent;
     public event EventHandler inventoryEvent;
@@ -38,13 +38,12 @@ public class InputManager : MonoBehaviour {
         playerInputAction.Player.Sprint.canceled += context => SprintPressed = false;
         playerInputAction.Player.Interact.performed += context => InteractPressed = true;
         playerInputAction.Player.Interact.canceled += context => InteractPressed = false;
-        playerInputAction.Player.Interact2.performed += context => Interact2Pressed = true;
-        playerInputAction.Player.Interact2.canceled += context => Interact2Pressed = false;
         playerInputAction.Player.Shoot.performed += context => ShootPressed = true;
         playerInputAction.Player.Shoot.canceled += context => ShootPressed = false;
         playerInputAction.Player.Axe.performed += context => axeEvent?.Invoke(this, EventArgs.Empty);
         playerInputAction.Player.Bow.performed += context => bowEvent?.Invoke(this, EventArgs.Empty);
-        playerInputAction.Player.Pick.performed += context => pickEvent?.Invoke(this, EventArgs.Empty); 
+        playerInputAction.Player.Pick.performed += context => pickEvent?.Invoke(this, EventArgs.Empty);
+        playerInputAction.Player.Interact2.performed += context => bottleEvent?.Invoke(this, EventArgs.Empty);
         
         playerInputAction.UI.Enable();
         playerInputAction.UI.Menu.performed += context => menuEvent?.Invoke(this, EventArgs.Empty);

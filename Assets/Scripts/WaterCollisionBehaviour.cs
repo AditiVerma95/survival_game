@@ -9,9 +9,6 @@ public class WaterCollisionBehaviour : MonoBehaviour {
             waterUI.SetActive(true);
             if (InputManager.Instance.InteractPressed) {
                 GameManager.Instance.UpdateWater(1);
-            }
-
-            if (InputManager.Instance.Interact2Pressed) {
                 GameManager.Instance.UpdateBottle(1);
             }
         }
