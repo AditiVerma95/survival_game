@@ -15,10 +15,16 @@ public class Wolf : MonoBehaviour
     private float wanderTimer;
     private Animator anim;
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSourceHit;
+    [SerializeField] private AudioClip wolfWalkClip;
+    [SerializeField] private AudioClip wolfRunClip;
+
     public int health = 10;
     private bool isAlive = true;
     void Start() {
         agent = GetComponent<NavMeshAgent>();
+        audioSource = GetComponent<AudioSource>();
         anim = GetComponentInChildren<Animator>(); // In case model is a child
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -29,13 +35,20 @@ public class Wolf : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) {
         if (other.collider.CompareTag("Arrow")) {
+            audioSourceHit.Play();
+            Destroy(other.gameObject);
             health -= 5;
         }
 
         if (health == 0) {
             isAlive = false;
+            InventoryManager.Instance.UpdateMeat(1);
+            audioSource.Stop();
+            Destroy(gameObject, 10f);
         }
     }
+    
+    
 
     void Update() {
 
@@ -46,6 +59,11 @@ public class Wolf : MonoBehaviour
                 anim.SetBool("isRun", true);
                 agent.speed = 6f;
                 agent.SetDestination(player.position);
+                if (audioSource.clip != wolfRunClip) {
+                    audioSource.clip = wolfRunClip;
+                    audioSource.loop = true;
+                    audioSource.Play();
+                }
             }
             else {
                 // Wander mode
@@ -56,6 +74,11 @@ public class Wolf : MonoBehaviour
                     Vector3 newPos = RandomNavSphere(transform.position, wanderRadius);
                     agent.SetDestination(newPos);
                     wanderTimer = 0;
+                }
+                if (audioSource.clip != wolfWalkClip) {
+                    audioSource.clip = wolfWalkClip;
+                    audioSource.loop = true;
+                    audioSource.Play();
                 }
             }
         }

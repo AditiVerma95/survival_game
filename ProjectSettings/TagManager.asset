@@ -9,6 +9,8 @@ TagManager:
   - Apple
   - Lighter
   - Arrow
+  - Enemy
+  - CookedMeat
   layers:
   - Default
   - TransparentFX

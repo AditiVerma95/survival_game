@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2911209124251830643
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1550897418330692120}
+  m_Layer: 0
+  m_Name: MeatPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1550897418330692120
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2911209124251830643}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.6954686, y: 0.12776326, z: -0.12776326, w: 0.6954686}
+  m_LocalPosition: {x: -1.18, y: 2.21, z: 1.03}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2934727869162842019}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6720622107593833252
 GameObject:
   m_ObjectHideFlags: 0
@@ -35,6 +66,7 @@ Transform:
   m_Children:
   - {fileID: 8184764443771993496}
   - {fileID: 3524581425602107297}
+  - {fileID: 1550897418330692120}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 2.742, y: 0, z: 0}
 --- !u!33 &5172612073550938560
@@ -128,6 +160,9 @@ MonoBehaviour:
   firePS: {fileID: 3524581425602107302}
   pointLight: {fileID: 7421098077950034259}
   firepitUI: {fileID: 0}
+  cookedMeatPrefab: {fileID: 1383521479304144795, guid: edaa42bf4079211489df674b8f425095, type: 3}
+  cookMeatUI: {fileID: 0}
+  cookedMeatSpawnPoint: {fileID: 1550897418330692120}
 --- !u!1001 &2469248439342401321
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -190,7 +225,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7552325380232887710, guid: 9f90aa15c6b14234ea7247f33f09e816, type: 3}
       propertyPath: m_Intensity
-      value: 100
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -215,6 +250,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2934727869162842019}
     m_Modifications:
+    - target: {fileID: 3630983130738417110, guid: e91fa0fac941e714e8c4d5709097019f, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8829451551789304537, guid: e91fa0fac941e714e8c4d5709097019f, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.407067

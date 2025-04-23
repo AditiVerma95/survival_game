@@ -10,7 +10,10 @@ public class BowMechanics : MonoBehaviour {
     private float shootAnimationLength = 0.567f;
     private float reloadAnimationLength = 1.5f;
 
+    private AudioSource audioSource;
+
     private void Start() {
+        audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
     }
 
@@ -24,6 +27,7 @@ public class BowMechanics : MonoBehaviour {
         PlayerEquipState.Instance.canSwitch = false;
         isAnimating = true;
         animator.SetBool("isDrawing", true);
+        audioSource.Play();
         
         yield return new WaitForSeconds(shootAnimationLength);
         
@@ -32,7 +36,6 @@ public class BowMechanics : MonoBehaviour {
         Rigidbody arrowRb = arrow.GetComponent<Rigidbody>();
         arrowRb.useGravity = true;
         arrowRb.AddForce(transform.right * 20f, ForceMode.Impulse);
-
         yield return new WaitForSeconds(reloadAnimationLength);
         animator.SetBool("isDrawing", false);
         isAnimating = false;

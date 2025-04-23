@@ -22,6 +22,10 @@ public class PickableMechanics : MonoBehaviour {
             else if (raycastHit.collider.tag == "Lighter") {
                 raycastHit.collider.GetComponent<Lighter>().PickLighter();
             }
+            
+            else if (raycastHit.collider.tag == "CookedMeat") {
+                raycastHit.collider.GetComponent<CookedMeat>().PickCookedMeat();
+            }
         }
     }
 }

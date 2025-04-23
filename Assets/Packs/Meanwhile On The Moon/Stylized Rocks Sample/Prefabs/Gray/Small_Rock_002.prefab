@@ -343,7 +343,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -8375706489149534427, guid: 445043dfb98d162479afd32ad7d07d8f, type: 3}
 --- !u!95 &2360184526726101632
@@ -381,6 +381,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rockBreakPS: {fileID: 1078063030667806641}
+  rockVisual1: {fileID: 4031926934915188912}
+  rockVisual2: {fileID: 1452396131420607554}
+  rockVisual3: {fileID: 2090955336698688964}
 --- !u!1001 &7407441972158718811
 PrefabInstance:
   m_ObjectHideFlags: 0

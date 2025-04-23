@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 public class Bear : MonoBehaviour
 {
-    public float detectionRadius = 50f;
+    public float detectionRadius = 30f;
     public float wanderRadius = 20f;
     public float wanderInterval = 5f;
     public Transform player;
@@ -15,6 +15,12 @@ public class Bear : MonoBehaviour
     private float wanderTimer;
     private Animator anim;
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSourceHit;
+    [SerializeField] private AudioClip bearWalkClip;
+    [SerializeField] private AudioClip bearRunClip;
+    private bool isAudioPlaying = false;
+    
     public int health = 20;
     private bool isAlive = true;
     void Start() {
@@ -25,20 +31,27 @@ public class Bear : MonoBehaviour
 
         wanderTimer = wanderInterval;
         anim.SetBool("isAlive", true);
+        audioSource.Play();
     }
 
     private void OnCollisionEnter(Collision other) {
         if (other.collider.CompareTag("Arrow")) {
+            audioSourceHit.Play();
+            Destroy(other.gameObject);
             health -= 5;
         }
-
+        
+        
         if (health == 0) {
             isAlive = false;
+            InventoryManager.Instance.UpdateMeat(2);
+            audioSource.Stop();
+            Destroy(gameObject, 10f);
         }
     }
+    
 
     void Update() {
-
         if (isAlive) {
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
             if (distanceToPlayer <= detectionRadius) {
@@ -46,6 +59,11 @@ public class Bear : MonoBehaviour
                 anim.SetBool("isRun", true);
                 agent.speed = 5f;
                 agent.SetDestination(player.position);
+                if (audioSource.clip != bearRunClip) {
+                    audioSource.clip = bearRunClip;
+                    audioSource.loop = true;
+                    audioSource.Play();
+                }
             }
             else {
                 // Wander mode
@@ -56,6 +74,11 @@ public class Bear : MonoBehaviour
                     Vector3 newPos = RandomNavSphere(transform.position, wanderRadius);
                     agent.SetDestination(newPos);
                     wanderTimer = 0;
+                }
+                if (audioSource.clip != bearWalkClip) {
+                    audioSource.clip = bearWalkClip;
+                    audioSource.loop = true;
+                    audioSource.Play();
                 }
             }
         }

@@ -8,8 +8,11 @@ public class AxeMechanics : MonoBehaviour {
     private float swingAnimationLength = 0.583f;
     [SerializeField] private Camera mainCamera;
 
+    private AudioSource audioSource;
+
     private void Start() {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update() {
@@ -42,7 +45,7 @@ public class AxeMechanics : MonoBehaviour {
                 hit.collider.GetComponent<Rock>().BreakRock();
             }
         }
-
+        audioSource.Play();
         yield return new WaitForSeconds(swingAnimationLength / 2f);
 
         animator.SetBool("isFire", false);
