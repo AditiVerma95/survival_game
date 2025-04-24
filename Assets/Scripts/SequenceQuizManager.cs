@@ -130,11 +130,21 @@ public class SequenceQuizManager : MonoBehaviour
     IEnumerator HandleWrongAnswer()
     {
         questionText.text = "Incorrect!";
+        float penaltyTime = 10f;
+        
         solutionText.gameObject.SetActive(true);
         solutionText.text = "Solution: " + quizList[currentQuestionIndex].explanation;
-        yield return new WaitForSeconds(30f);
+
+        // Show countdown for 10 seconds
+        while (penaltyTime > 0)
+        {
+            timerText.text = "Wait: " + Mathf.CeilToInt(penaltyTime).ToString();
+            penaltyTime -= Time.deltaTime;
+            yield return null;
+        }
         NextQuestion();
     }
+
 
     void NextQuestion()
     {

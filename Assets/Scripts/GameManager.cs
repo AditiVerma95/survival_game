@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     [Header("Health")]
@@ -44,6 +45,9 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator HealthDeplete() {
         while (true) {
+            if (health <= 0f) {
+                SceneManager.LoadScene(0);
+            }
             if (food <= 0f || water <= 0f) {
                 UpdateHealth(-healthDepleteFactor);
             }

@@ -66,6 +66,7 @@ public class InventoryManager : MonoBehaviour {
 
     public void CookedMeatConsume() {
         if (cookedMeat > 0) {
+            UpdateCookedMeat(-1);
             GameManager.Instance.UpdateFood(0.5f);
             GameManager.Instance.UpdateHealth(0.5f);
         }
